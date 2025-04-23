@@ -1,6 +1,49 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&display=swap');
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@layer base {
+  html {
+    font-family: 'Inter', system-ui, sans-serif;
+    scroll-behavior: smooth;
+  }
+}
+
+@layer components {
+  .gradient-bg {
+    @apply bg-gradient-to-br from-medical-blue to-medical-purple;
+  }
+  
+  .card-shadow {
+    @apply shadow-lg hover:shadow-xl transition-shadow duration-300;
+  }
+  
+  .pulse-animation {
+    @apply animate-pulse;
+  }
+
+  .stat-card {
+    @apply rounded-xl bg-white p-4 shadow-md hover:shadow-lg transition-shadow;
+  }
+
+  .priority-critical {
+    @apply bg-medical-red text-white;
+  }
+  
+  .priority-high {
+    @apply bg-medical-orange text-white;
+  }
+  
+  .priority-medium {
+    @apply bg-medical-yellow text-white;
+  }
+  
+  .priority-low {
+    @apply bg-medical-green text-white;
+  }
+}
 
 @layer base {
   :root {
