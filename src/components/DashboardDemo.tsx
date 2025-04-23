@@ -1,7 +1,7 @@
-
 import React, { useState } from "react";
 import PatientCard from "./PatientCard";
 import ExplainabilityCard from "./ExplainabilityCard";
+import HospitalCapacityAlert from "./HospitalCapacityAlert";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import {
   Dialog,
@@ -16,7 +16,6 @@ import { Button } from "@/components/ui/button";
 import { Search, Bell, List, ChevronDown, RefreshCw, Filter } from "lucide-react";
 import { Input } from "@/components/ui/input";
 
-// Mock data for the dashboard
 const mockPatients = [
   {
     id: "P-001",
@@ -187,7 +186,6 @@ const DashboardDemo: React.FC = () => {
         </div>
 
         <div className="bg-white rounded-xl shadow-lg overflow-hidden">
-          {/* Dashboard Header */}
           <div className="bg-medical-dark text-white p-4">
             <div className="flex justify-between items-center">
               <div className="flex items-center">
@@ -205,7 +203,6 @@ const DashboardDemo: React.FC = () => {
             </div>
           </div>
 
-          {/* Dashboard Toolbar */}
           <div className="p-4 bg-gray-50 border-b flex flex-wrap gap-3 justify-between">
             <div className="flex flex-wrap gap-2 items-center">
               <div className="relative">
@@ -250,7 +247,6 @@ const DashboardDemo: React.FC = () => {
             </div>
           </div>
 
-          {/* Dashboard Content */}
           <div className="p-4">
             <Tabs defaultValue="patients">
               <TabsList className="mb-4">
@@ -260,6 +256,9 @@ const DashboardDemo: React.FC = () => {
               </TabsList>
               
               <TabsContent value="patients">
+                <div className="mb-4">
+                  <HospitalCapacityAlert />
+                </div>
                 <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
                   {mockPatients.map((patient) => (
                     <PatientCard
@@ -289,7 +288,6 @@ const DashboardDemo: React.FC = () => {
           </div>
         </div>
         
-        {/* Explainability Dialog */}
         <Dialog open={dialogOpen} onOpenChange={setDialogOpen}>
           <DialogContent className="max-w-lg">
             <DialogHeader>
@@ -311,7 +309,6 @@ const DashboardDemo: React.FC = () => {
           </DialogContent>
         </Dialog>
         
-        {/* Override Priority Dialog */}
         <Dialog open={overrideDialogOpen} onOpenChange={setOverrideDialogOpen}>
           <DialogContent className="max-w-md">
             <DialogHeader>
@@ -364,7 +361,6 @@ const DashboardDemo: React.FC = () => {
                   <Button 
                     disabled={!selectedPriority}
                     onClick={() => {
-                      // In a real app, this would update the patient's priority
                       setOverrideDialogOpen(false);
                       setSelectedPriority("");
                     }}
