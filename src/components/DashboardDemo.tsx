@@ -1,19 +1,18 @@
 import React, { useState } from "react";
-import PatientCard from "./PatientCard";
+import DashboardHeader from "./dashboard/DashboardHeader";
+import SearchFilters from "./dashboard/SearchFilters";
+import SortControls from "./dashboard/SortControls";
+import DashboardContent from "./dashboard/DashboardContent";
 import ExplainabilityCard from "./ExplainabilityCard";
-import HospitalCapacityAlert from "./HospitalCapacityAlert";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import {
   Dialog,
   DialogContent,
   DialogDescription,
   DialogHeader,
   DialogTitle,
-  DialogTrigger,
 } from "@/components/ui/dialog";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Button } from "@/components/ui/button";
-import { Search, Bell, List, ChevronDown, RefreshCw, Filter } from "lucide-react";
 import { Input } from "@/components/ui/input";
 
 const mockPatients = [
@@ -186,106 +185,18 @@ const DashboardDemo: React.FC = () => {
         </div>
 
         <div className="bg-white rounded-xl shadow-lg overflow-hidden">
-          <div className="bg-medical-dark text-white p-4">
-            <div className="flex justify-between items-center">
-              <div className="flex items-center">
-                <h3 className="text-lg font-semibold">Emergency Department Triage Dashboard</h3>
-                <span className="ml-2 px-2 py-0.5 bg-green-500 text-white text-xs rounded-full">Live Demo</span>
-              </div>
-              <div className="flex items-center space-x-2">
-                <Button variant="ghost" className="text-white" size="sm">
-                  <RefreshCw className="h-4 w-4 mr-1" /> Refresh
-                </Button>
-                <Button variant="ghost" className="text-white" size="sm">
-                  <Bell className="h-4 w-4" />
-                </Button>
-              </div>
-            </div>
-          </div>
-
+          <DashboardHeader />
+          
           <div className="p-4 bg-gray-50 border-b flex flex-wrap gap-3 justify-between">
-            <div className="flex flex-wrap gap-2 items-center">
-              <div className="relative">
-                <Search className="absolute left-2.5 top-2.5 h-4 w-4 text-gray-500" />
-                <Input 
-                  type="text" 
-                  placeholder="Search patients..." 
-                  className="pl-9 w-[200px] h-9"
-                />
-              </div>
-              <Select>
-                <SelectTrigger className="w-[160px] h-9">
-                  <div className="flex items-center">
-                    <Filter className="h-4 w-4 mr-1" />
-                    <SelectValue placeholder="Filter Priority" />
-                  </div>
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="all">All Patients</SelectItem>
-                  <SelectItem value="critical">Critical</SelectItem>
-                  <SelectItem value="high">High Priority</SelectItem>
-                  <SelectItem value="medium">Medium Priority</SelectItem>
-                  <SelectItem value="low">Low Priority</SelectItem>
-                </SelectContent>
-              </Select>
-            </div>
-            <div className="flex items-center gap-2">
-              <span className="text-sm text-gray-500">4 Patients Waiting</span>
-              <Select>
-                <SelectTrigger className="w-[160px] h-9">
-                  <div className="flex items-center">
-                    <List className="h-4 w-4 mr-1" />
-                    <SelectValue placeholder="Sort By" />
-                  </div>
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="priority">Priority (High-Low)</SelectItem>
-                  <SelectItem value="arrival">Arrival Time</SelectItem>
-                  <SelectItem value="age">Age</SelectItem>
-                </SelectContent>
-              </Select>
-            </div>
+            <SearchFilters />
+            <SortControls />
           </div>
 
-          <div className="p-4">
-            <Tabs defaultValue="patients">
-              <TabsList className="mb-4">
-                <TabsTrigger value="patients">Patient Queue</TabsTrigger>
-                <TabsTrigger value="analytics">Analytics</TabsTrigger>
-                <TabsTrigger value="capacity">Capacity Planning</TabsTrigger>
-              </TabsList>
-              
-              <TabsContent value="patients">
-                <div className="mb-4">
-                  <HospitalCapacityAlert />
-                </div>
-                <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-                  {mockPatients.map((patient) => (
-                    <PatientCard
-                      key={patient.id}
-                      patient={patient}
-                      onViewDetails={handleViewDetails}
-                      onOverride={handleOverride}
-                    />
-                  ))}
-                </div>
-              </TabsContent>
-              
-              <TabsContent value="analytics" className="min-h-[400px] flex items-center justify-center">
-                <div className="text-center p-6">
-                  <h3 className="text-xl font-semibold text-gray-700 mb-2">Analytics Dashboard</h3>
-                  <p className="text-gray-500">Real-time analytics and insights would be displayed here.</p>
-                </div>
-              </TabsContent>
-              
-              <TabsContent value="capacity" className="min-h-[400px] flex items-center justify-center">
-                <div className="text-center p-6">
-                  <h3 className="text-xl font-semibold text-gray-700 mb-2">Capacity Planning</h3>
-                  <p className="text-gray-500">ED capacity forecasting based on current trends would appear here.</p>
-                </div>
-              </TabsContent>
-            </Tabs>
-          </div>
+          <DashboardContent 
+            mockPatients={mockPatients}
+            onViewDetails={handleViewDetails}
+            onOverride={handleOverride}
+          />
         </div>
         
         <Dialog open={dialogOpen} onOpenChange={setDialogOpen}>
